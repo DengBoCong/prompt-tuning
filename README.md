@@ -121,6 +121,16 @@
 
 + PyTorch [官方文档](https://pytorch.org/docs/stable/index.html) [中文文档](https://github.com/apachecn/pytorch-doc-zh)
 
++ Mathpix Snip [地址](https://mathpix.com/)
+> 这款神器只要截个图，公式会自动转化为 LaTex 表达式，我们只需要简单地修改就行了。
+
++ 马克飞象 Markdown [地址](https://maxiang.io/)
+
++ mdnice [地址](https://mdnice.com/)
+
++ Zotero [下载](https://www.zotero.org/download/)
+> Zotero作为一款协助科研工作者收集、管理以及引用研究资源的免费软件，如今已被广泛使用。此篇使用说明主要分享引用研究资源功能，其中研究资源可以包括期刊、书籍等各类文献和网页、图片等。
+
 # 项目
 
 # 会议

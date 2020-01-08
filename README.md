@@ -151,3 +151,7 @@
 + ECCV：https://eccv2018.org/program/main-conference/
 
 + ICCV：http://iccv2019.thecvf.com/
+
+
+# 其他
++ 黄海广博士的GitHub [地址](https://github.com/fengdu78)

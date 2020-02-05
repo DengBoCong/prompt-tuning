@@ -155,3 +155,6 @@
 
 # 其他
 + 黄海广博士的GitHub [地址](https://github.com/fengdu78)
++ XMind [地址](https://www.xmind.cn/)
++ MathPix [地址](https://mathpix.com/)
++ TensorFlow的在线编辑colab [地址](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/quickstart/beginner.ipynb?hl=zh_cn#scrollTo=2XM_GL37rywO)

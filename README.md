@@ -54,10 +54,6 @@
 + 《深度学习》 -- 花书
 + 《深度学习 500 问》
 
-# 计算机视觉
-+ 《Computer Vision：Models, Learning and Inference》
-+ 《Computer Vision：Algorithms and Applications》
-+ 《OpenCV3编程入门》
 
 # 理论实战
 + 《Scikit-Learn 与 TensorFlow 机器学习实用指南》
@@ -90,10 +86,6 @@
 + 李宏毅《深度强化学习》 [中文课程](https://www.bilibili.com/video/av24724071?from=search&seid=9547815852611563503) [中文笔记](https://blog.csdn.net/cindy_1102/article/details/87905272) [课程 PPT](http://speech.ee.ntu.edu.tw/~tlkagk/courses_MLDS18.html)
 > David Silver 的课程虽然内容详尽，但前沿的很多内容都没有被包括在内，这时，台大李宏毅的《深度强化学习》就是学习前沿动态的不二之选。
 
-## 计算机视觉
-+ Stanford CS223B
-> 比较适合基础，适合刚刚入门的同学，跟深度学习的结合相对来说会少一点，不会整门课讲深度学习，而是主要讲计算机视觉，方方面面都会讲到
-
 
 # 论文
 + Deep Learning Papers 阅读路线 [地址](https://github.com/floodsung/Deep-Learning-Papers-Reading-Roadmap)
@@ -104,8 +96,6 @@
 
 + Papers with Code [Papers with Code(Browse state-of-the-art)](https://paperswithcode.com/sota)
 
-+ Deep Learning Object Detection [地址](https://github.com/hoya012/deep_learning_object_detection)
-> 目标检测（Object Detection）是深度学习 CV 领域的一个核心研究领域和重要分支。纵观 2013 年到 2019 年，从最早的 R-CNN、Fast R-CNN 到后来的 YOLO v2、YOLO v3 再到今年的 M2Det，新模型层出不穷，性能也越来越好！
 + Arxiv Stats [Arxiv 机器学习最新论文检索主页地址](https://arxiv.org/list/stat.ML/recent?ref=bestofml.com)
 
 # 参考文档及工具
@@ -132,23 +122,6 @@
 # 项目
 
 # 会议
-+ NeurIPS：https://nips.cc/
-
-+ ICML：https://icml.cc/
-
-+ ICLR：https://iclr.cc/
-
-+ AAAI：https://aaai.org/Conferences/AAAI-19/
-
-+ IJCAI：https://www.ijcai.org/
-
-+ UAI：http://www.auai.org/uai2019/index.php
-
-+ CVPR：http://cvpr2019.thecvf.com/
-
-+ ECCV：https://eccv2018.org/program/main-conference/
-
-+ ICCV：http://iccv2019.thecvf.com/
 
 
 # 其他

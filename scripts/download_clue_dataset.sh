@@ -1,0 +1,12 @@
+wget https://storage.googleapis.com/cluebenchmark/tasks/afqmc_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/tnews_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/iflytek_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/ocnli_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/cmnli_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/cluewsc2020_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/csl_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/cmrc2018_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/drcd_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/chid_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/c3_public.zip
+wget https://storage.googleapis.com/cluebenchmark/tasks/clue_diagnostics_public.zip

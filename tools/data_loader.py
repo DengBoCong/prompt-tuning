@@ -24,7 +24,7 @@ class GLUEDataLoader(object):
         self.seed = seed
         np.random.seed(seed)
 
-    def generate_k_shot(self, k: int, data_dir: str, task_name: str, dev_rate: int = 1):
+    def generate_k_shot(self, k: int, data_dir: str, task_name: str, dev_rate: int = 1) -> Tuple[List[str], List[str]]:
         """
         :param k: 类内sampling num
         :param data_dir: 数据集路径

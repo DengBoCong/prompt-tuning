@@ -515,7 +515,7 @@ class TextClassificationProcessor(DataProcessor):
         for (i, line) in enumerate(lines):
             guid = "%s-%s" % (set_type, i)
             if self.task_name == "ag_news":
-                examples.append(InputExample(guid=guid, text_a=line[1] + '. ' + line[2],
+                examples.append(InputExample(guid=guid, text_a=line[1] + ". " + line[2],
                                              short_text=line[1] + ".", label=line[0]))
             elif self.task_name == "yelp_review_full":
                 examples.append(InputExample(guid=guid, text_a=line[1], short_text=line[1], label=line[0]))
@@ -628,19 +628,19 @@ bound_mapping = {
 }
 
 label_of_mapping = {
-    'SST-2': {'0': 'terrible', '1': 'great'},
-    'sst-5': {0: 'terrible', 1: 'bad', 2: 'okay', 3: 'good', 4: 'great'},
-    'mr': {0: 'terrible', 1: 'great'},
-    'cr': {0: 'terrible', 1: 'great'},
-    'subj': {0: 'subjective', 1: 'objective'},
-    'trec': {0: 'Description', 1: 'Entity', 2: 'Expression', 3: 'Human', 4: 'Location', 5: 'Number'},
-    'mpqa': {0: 'terrible', 1: 'great'},
-    'CoLA': {'0': 'incorrect', '1': 'correct'},
-    'MRPC': {'0': 'No', '1': 'Yes'},
-    'QQP': {'0': 'No', '1': 'Yes'},
-    'STS-B': {'0': 'No', '1': 'Yes'},
-    'MNLI': {'contradiction': 'No', 'entailment': 'Yes', 'neutral': 'Maybe'},
-    'SNLI': {'contradiction': 'No', 'entailment': 'Yes', 'neutral': 'Maybe'},
-    'QNLI': {'not_entailment': 'No', 'entailment': 'Yes'},
-    'RTE': {'not_entailment': 'No', 'entailment': 'Yes'}
+    "SST-2": {"0": "terrible", "1": "great"},
+    "sst-5": {0: "terrible", 1: "bad", 2: "okay", 3: "good", 4: "great"},
+    "mr": {0: "terrible", 1: "great"},
+    "cr": {0: "terrible", 1: "great"},
+    "subj": {0: "subjective", 1: "objective"},
+    "trec": {0: "Description", 1: "Entity", 2: "Expression", 3: "Human", 4: "Location", 5: "Number"},
+    "mpqa": {0: "terrible", 1: "great"},
+    "CoLA": {"0": "incorrect", "1": "correct"},
+    "MRPC": {"0": "No", "1": "Yes"},
+    "QQP": {"0": "No", "1": "Yes"},
+    "STS-B": {"0": "No", "1": "Yes"},
+    "MNLI": {"contradiction": "No", "entailment": "Yes", "neutral": "Maybe"},
+    "SNLI": {"contradiction": "No", "entailment": "Yes", "neutral": "Maybe"},
+    "QNLI": {"not_entailment": "No", "entailment": "Yes"},
+    "RTE": {"not_entailment": "No", "entailment": "Yes"}
 }

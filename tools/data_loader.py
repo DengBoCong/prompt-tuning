@@ -7,24 +7,33 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import abc
 import os
 import numpy as np
 import pandas as pd
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Any
 
 
-class GLUEDataLoader(object):
+class DataLoader(abc.ABC):
+    """Dataset Loader"""
+
+    @abc.abstractmethod
+    def generate_k_shot(self, **kwargs):
+        raise NotImplementedError
+
+
+class GLUEDataLoader(DataLoader):
     """Support GLUE Dataset"""
 
-    def __init__(self, seed: int, **kwargs) -> None:
-        """
-        :param seed: 随机种子
-        """
+    def __init__(self, **kwargs) -> None:
         super(GLUEDataLoader, self).__init__()
-        self.seed = seed
-        np.random.seed(seed)
 
-    def generate_k_shot(self, k: int, data_dir: str, task_name: str, dev_rate: int = 1) -> Tuple[List[str], List[str]]:
+    def generate_k_shot(self,
+                        k: int,
+                        data_dir: str,
+                        task_name: str,
+                        dev_rate: int = 1,
+                        **kwargs) -> Tuple[List[str], List[str]]:
         """
         :param k: 类内sampling num
         :param data_dir: 数据集路径
@@ -45,6 +54,7 @@ class GLUEDataLoader(object):
         # Get label list for balanced sampling
         label_list = {}
         for line in train_lines:
+            line = line.strip().strip("\n")
             label = self.get_label(task_name, line)
             if label not in label_list:
                 label_list[label] = [line]
@@ -102,7 +112,7 @@ class GLUEDataLoader(object):
         return dataset
 
     @staticmethod
-    def get_label(task_name: str, line: str) -> Optional[str, int]:
+    def get_label(task_name: str, line: str) -> Any:
         """
         :param task_name: 任务数据集名
         :param line: 已读取数据文件的行
@@ -135,6 +145,53 @@ class GLUEDataLoader(object):
         else:
             return line[0]
 
+    @staticmethod
+    def gen_samples(task_name: str, sources: Any) -> List[Dict[str, Any]]:
+        """
+        :param task_name: 任务数据集名
+        :param sources: 已读取数据文件的行 或 文件地址
+        """
+        if isinstance(sources, str):
+            samples = []
+            with open(sources, "r", encoding="utf-8") as file:
+                for line in file:
+                    line = line.strip().strip("\n")
+                    samples.append(line)
+        else:
+            samples = sources
+
+        if task_name != "CoLA" and isinstance(sources, str):
+            samples = samples[1:]
+
+        dataset = []
+        for sample in samples:
+            sample = sample.strip().split("\t")
+            if task_name == "CoLA":
+                dataset.append({"label": sample[1], "text": [sample[-1]]})
+            elif task_name == "MNLI":
+                dataset.append({"label": sample[-1], "text": [sample[8], sample[9]]})
+            elif task_name == "MRPC":
+                dataset.append({"label": sample[0], "text": [sample[-2], sample[-1]]})
+            elif task_name == "QNLI":
+                dataset.append({"label": sample[-1], "text": [sample[1], sample[2]]})
+            elif task_name == "QQP":
+                dataset.append({"label": sample[-1], "text": [sample[3], sample[4]]})
+            elif task_name == "RTE":
+                dataset.append({"label": sample[-1], "text": [sample[1], sample[2]]})
+            elif task_name == "SNLI":
+                dataset.append({"label": sample[-1], "text": [sample[7], sample[8]]})
+            elif task_name == "SST-2":
+                dataset.append({"label": sample[-1], "text": [sample[0]]})
+            elif task_name == "STS-B":
+                dataset.append({"label": "0" if float(sample[-1]) < 2.5 else "1", "text": [sample[-3], sample[-2]]})
+            elif task_name == "WNLI":
+                dataset.append({"label": sample[-1], "text": [sample[1], sample[2]]})
+            else:
+                dataset.append({"label": sample[0], "text": [sample[1]]})
+
+        return dataset
 
 
-
+loader_map = {
+    "glue": GLUEDataLoader
+}

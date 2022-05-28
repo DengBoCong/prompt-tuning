@@ -12,7 +12,7 @@ from core.gen_template import TemplateGenerator
 from transformers import AutoModel
 from transformers import AutoTokenizer
 from tqdm import tqdm
-from typing import List, Dict, Any, Callable
+from typing import List, Dict, Any, Callable, Tuple
 
 
 class LMBFFTemplateGenerator(TemplateGenerator):
@@ -36,8 +36,8 @@ class LMBFFTemplateGenerator(TemplateGenerator):
                         template_encoder: Callable[[str, List[str], Any, Any, Dict[Any, Any]], List[int]] = None,
                         forbid_tokens: List[int] = None,
                         forbid_continuous_token: List[int] = None,
-                        replace_token_map: Dict[str, str] = None,
-                        *args, **kwargs):
+                        replace_token_map_list: List[Dict[str, str]] = None,
+                        *args, **kwargs) -> List[Tuple[str, float, List[str]]]:
         """
         :param model: 用来生成prompt的模型
         :param tokenizer: 编码器
@@ -55,7 +55,7 @@ class LMBFFTemplateGenerator(TemplateGenerator):
         :param template_encoder: 和template匹配的文本编码方法
         :param forbid_tokens: 跳过一些特定的token，如"..."
         :param forbid_continuous_token: 跳过一些不可连续生成的token，如标点符号
-        :param replace_token_map: 用于替换生成的文本中部分的token
+        :param replace_token_map_list: 用于替换生成的文本中部分的token，配合inspired_templates定制化，数量需要一致
         """
         if isinstance(model, str):
             model = AutoModel.from_pretrained(model)
@@ -65,7 +65,7 @@ class LMBFFTemplateGenerator(TemplateGenerator):
         res_templates = []
 
         assert len(truncates) == len(inspired_templates)
-        for inspired_template, truncate in zip(inspired_templates, truncates):
+        for inspired_template, truncate, replace_token_map in zip(inspired_templates, truncates, replace_token_map_list):
             generate_text = self.generate(dataset, inspired_template, model, tokenizer, target_number, label_mapping,
                                           beam, batch_size, gen_max_len, label, truncate, first_mask_token, end_token,
                                           template_encoder, forbid_tokens, forbid_continuous_token)[:beam // 2]
@@ -77,6 +77,8 @@ class LMBFFTemplateGenerator(TemplateGenerator):
                     res_templates.append((text, score, text_id))
             else:
                 res_templates = generate_text
+
+        return res_templates
 
     def generate(self,
                  dataset: List[Dict[str, Any]],
@@ -94,7 +96,7 @@ class LMBFFTemplateGenerator(TemplateGenerator):
                  end_token: str = "</s>",
                  template_encoder: Callable[[str, List[str], Any, Any, Dict[Any, Any]], List[int]] = None,
                  forbid_tokens: List[int] = None,
-                 forbid_continuous_token: List[int] = None):
+                 forbid_continuous_token: List[int] = None) -> List[Tuple[str, float, List[str]]]:
         """
         :param dataset: 载入的数据，一般形式: {"label": line[-1], "text": [line[8], line[9]]}
         :param inspired_template: 启发输入模板

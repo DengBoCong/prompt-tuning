@@ -8,13 +8,16 @@ from __future__ import division
 from __future__ import print_function
 
 import abc
-from core.gen_template.LM_BFF import LMBFFTemplateGenerator
-
-
-__all__ = ["LMBFFTemplateGenerator"]
 
 
 class TemplateGenerator(abc.ABC):
     @abc.abstractmethod
     def search_template(self, *args, **kwargs):
         raise NotImplementedError
+
+
+from core.gen_template.LM_BFF import LMBFFTemplateGenerator
+
+template_generator_map = {
+    "lm_bff": LMBFFTemplateGenerator
+}

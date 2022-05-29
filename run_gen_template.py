@@ -34,10 +34,12 @@ def main():
     parser.add_argument("--generator_config_path", type=str, default="data/config/lm_bff.json", help="Data loader")
 
     args = parser.parse_args()
-    args.output_dir = os.path.join(args.output_dir, str(args.dev_rate))
+    args.output_dir = os.path.join(args.output_dir, f"{args.dev_rate}.txt")
 
     # random seed
     np.random.seed(args.seed)
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
     if args.data_loader == "glue":
         train_data, dev_data = loader_map[args.data_loader]().generate_k_shot(
             k=args.k, data_dir=args.data_dir, task_name=args.task_name, dev_rate=args.dev_rate
@@ -54,11 +56,12 @@ def main():
         tokenizer = T5Tokenizer.from_pretrained(generator_config["model_dir"])
         tokenizer.sep_token = generator_config["end_token"]
 
-        if torch.cuda.device_count() > 1:
-            model = nn.DataParallel(model, device_ids=[index for index in range(torch.cuda.device_count())])
+        # if torch.cuda.device_count() > 1:
+        #     model = nn.DataParallel(model, device_ids=[index for index in range(torch.cuda.device_count())])
+        model.to(device)
         model.eval()
 
-        template_generator = template_generator_map[args.template_generator]()
+        template_generator = template_generator_map[args.template_generator](device=device)
         res_templates = template_generator.search_template(
             model, tokenizer, datasets, generator_config["beam"], label_of_mapping[args.task_name],
             generator_config["inspired_templates"], generator_config["target_number"],
@@ -74,8 +77,6 @@ def main():
                 save_file.write(f"{score}\t{text}\n")
     else:
         raise ValueError(f"TemplateGenerator `{args.template_generator}` not found")
-
-    print(train_data)
 
 
 if __name__ == '__main__':

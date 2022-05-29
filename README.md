@@ -4,7 +4,33 @@
 + 集成主流的Prompt-tuning相关方法，以及search template策略
 + 提供Prompt-tuning完整的执行pipeline
 
-# 说明
+# Requirements
+本项目相关的依赖包参考requirements.txt，也可直接使用如下指令安装：
+```shell
+pip install -r requirements.txt
+```
+
+# Usage
++ core下放置相关prompt-tuning模型
++ core/gen_template下是相关template生成方法，执行入口参考run_gen_template.py，执行示例如下：
+```python
+python3 run_gen_template.py \
+    --task_name CoLA \
+    --k 16 \
+    --dev_rate 1 \
+    --data_loader glue \
+    --template_generator lm_bff \
+    --data_dir data/original/CoLA \
+    --output_dir data/output \
+    --generator_config_path data/config/lm_bff.json
+```
++ data放置相关config及datasets，由于数据集比较庞大，可使用scripts下的下载脚本自行下载，如下：
+```shell
+cd data
+sh download_clue_dataset.sh
+sh download_glue_dataset.sh
+```
++ tools放置相关工具方法及数据集处理方法等
 
 # Paper
 更详细的论文解读和阅读笔记 ☞  [点这里](https://github.com/DengBoCong/nlp-paper)

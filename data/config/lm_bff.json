@@ -1,0 +1,26 @@
+{
+  "model_dir": "./models/t5-3b",
+  "end_token": "</s>",
+  "beam": 100,
+  "inspired_templates": ["*cls**sentu_0**<extra_id_0>**label**<extra_id_1>**sep+*", "*cls*.*<extra_id_0>**label**<extra_id_1>**+sentu_0**sep+*"],
+  "target_number": 2,
+  "batch_size": 32,
+  "gen_max_len": 20,
+  "truncates": ["head", "tail"],
+  "first_mask_token": "<extra_id_0>",
+  "forbid_tokens": [3, 19794, 22354],
+  "forbid_continuous_token": [5],
+  "replace_token_map_list": [{
+    "<extra_id_0>": "*cls**sent_0*",
+    "<extra_id_1>": "*mask*",
+    "<extra_id_2>": "*sep+*",
+    "</s>": "*sep+*",
+    "▁":"_"
+  }, {
+    "<extra_id_0>": "*cls*",
+    "<extra_id_1>": "*mask*",
+    "<extra_id_2>": "*+sent_0**sep+*",
+    "</s>": "*+sent_0**sep+*",
+    "▁":"_"
+  }]
+}

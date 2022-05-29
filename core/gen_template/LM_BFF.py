@@ -16,8 +16,9 @@ from typing import List, Dict, Any, Callable, Tuple
 
 
 class LMBFFTemplateGenerator(TemplateGenerator):
-    def __init__(self) -> None:
+    def __init__(self, device: torch.device) -> None:
         super(LMBFFTemplateGenerator, self).__init__()
+        self.device = device
 
     def search_template(self,
                         model: Any,
@@ -141,6 +142,8 @@ class LMBFFTemplateGenerator(TemplateGenerator):
             input_ids[i, :input_tensors[i].size(-1)] = input_tensors[i]
             attention_mask[i, :input_tensors[i].size(-1)] = 1
 
+        input_ids = input_ids.to(self.device)
+        attention_mask = attention_mask.to(self.device)
         assert len(input_tensors) > 0
 
         start_mask = tokenizer._convert_token_to_id(first_mask_token)
@@ -156,6 +159,7 @@ class LMBFFTemplateGenerator(TemplateGenerator):
                     new_current_output.append(item)
                     continue
                 decoder_input_ids = item["decoder_input_ids"]
+                decoder_input_ids = decoder_input_ids.to(self.device)
 
                 # Forward
                 turn = input_ids.size(0) // batch_size

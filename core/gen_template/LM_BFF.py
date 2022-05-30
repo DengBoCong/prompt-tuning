@@ -77,7 +77,7 @@ class LMBFFTemplateGenerator(TemplateGenerator):
                         text.replace(ori_token, repl_token)
                     res_templates.append((text, score, text_id))
             else:
-                res_templates = generate_text
+                res_templates.extend(generate_text)
 
         return res_templates
 

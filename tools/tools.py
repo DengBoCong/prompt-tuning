@@ -7,7 +7,25 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import torch.nn as nn
 from typing import List, Any, Dict
+
+
+def resize_token_type_embeddings(model: Any, new_num_types: int, random_segment: bool):
+    """ Resize the segment (token type) embeddings for BERT """
+    if hasattr(model, "bert"):
+        old_token_type_embeddings = model.bert.embeddings.token_type_embeddings
+    else:
+        raise NotImplementedError
+    new_token_type_embeddings = nn.Embedding(new_num_types, old_token_type_embeddings.weight.size(1))
+    if not random_segment:
+        new_token_type_embeddings.weight.data[:old_token_type_embeddings.weight.size(0)] = old_token_type_embeddings.weight.data
+
+    model.config.type_vocab_size = new_num_types
+    if hasattr(model, "bert"):
+        model.bert.embeddings.token_type_embeddings = new_token_type_embeddings
+    else:
+        raise NotImplementedError
 
 
 def tokenize_multipart_input_for_gen_en(input_text_list: List[str],
@@ -169,3 +187,9 @@ def tokenize_multipart_input_for_gen_en(input_text_list: List[str],
     result["mask_pos"] = mask_pos
 
     return result
+
+
+# 调用工具融合
+multipart_map = {
+    "glue": tokenize_multipart_input_for_gen_en
+}

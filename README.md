@@ -24,6 +24,24 @@ python3 run_gen_template.py \
     --output_dir data/output \
     --generator_config_path data/config/lm_bff.json
 ```
++ 模型实现放在core目录下，执行入口参考run_prompt_tuning.py，执行示例如下：
+```python
+python3 run_prompt_tuning.py \
+    --data_dir data/CoLA/ \
+    --do_train \
+    --do_eval \
+    --do_predict \
+    --model_name_or_path bert \
+    --num_k 16 \
+    --max_steps 1000 \
+    --eval_steps 100 \
+    --learning_rate 1e-5 \
+    --output_dir result/ \
+    --seed 16
+    --template "*cls**sent_0*_It_was*mask*.*sep+*" \
+    --mapping "{'0':'terrible','1':'great'}" \
+    --num_sample 16 \
+```
 + data放置相关config及datasets，由于数据集比较庞大，可使用scripts下的下载脚本自行下载，如下：
 ```shell
 cd data
